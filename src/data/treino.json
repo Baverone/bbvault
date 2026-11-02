@@ -1,0 +1,133 @@
+{
+  "fonte": "Spec bbvault 1.a etapa, secao 4.1: tabela de treinos de um post da comunidade de 2011 (conferida com o historico de equipas do autor); base e secundaria medidas ou estimadas pelo autor; fatores de idade da curva da selecao; fatores de treinador estimados pela comunidade.",
+  "base": 0.67,
+  "fatorIdade": {
+    "18": 1.417,
+    "19": 1.25,
+    "20": 1,
+    "21": 0.833,
+    "22": 0.75,
+    "23": 0.667,
+    "24": 0.667,
+    "25": 0.5,
+    "26": 0.417,
+    "27": 0.333,
+    "28": 0.167
+  },
+  "fatorTreinador": {
+    "3": 0.869,
+    "4": 0.939,
+    "5": 0.98,
+    "6": 1,
+    "7": 1.01
+  },
+  "fatorPosicoes": { "1": 1, "2": 0.62 },
+  "limiarMinutos": [
+    { "ate": 19, "minutos": 45 },
+    { "ate": 26, "minutos": 48 },
+    { "ate": 999, "minutos": 40 }
+  ],
+  "folgaMinutos": 1,
+  "secundaria": 0.15,
+  "cenarios": {
+    "rapido": { "mult": 1.15, "inicio": 0.99 },
+    "esperado": { "mult": 1, "inicio": 0.5 },
+    "lento": { "mult": 0.85, "inicio": 0 }
+  },
+  "treinos": [
+    {
+      "id": "pressure",
+      "nome": "Pressure / Outside Defense",
+      "primaria": "OD",
+      "grupos": [
+        { "posicoes": ["PG"], "secundarias": ["HA", "DR", "ID"] },
+        { "posicoes": ["PG", "SG"], "secundarias": ["HA", "DR", "ID"] },
+        { "posicoes": ["PG", "SG", "SF"], "secundarias": ["HA", "DR", "ID"] }
+      ]
+    },
+    {
+      "id": "ball-handling",
+      "nome": "Ball Handling",
+      "primaria": "HA",
+      "grupos": [
+        { "posicoes": ["PG"], "secundarias": ["OD", "DR"] },
+        { "posicoes": ["PG", "SG"], "secundarias": ["OD", "DR"] },
+        { "posicoes": ["PG", "SG", "SF"], "secundarias": ["OD", "DR"] }
+      ]
+    },
+    {
+      "id": "passing",
+      "nome": "Passing",
+      "primaria": "PA",
+      "grupos": [
+        { "posicoes": ["PG"], "secundarias": ["HA", "DR"] },
+        { "posicoes": ["PG", "SG"], "secundarias": ["HA", "DR"] }
+      ]
+    },
+    {
+      "id": "one-on-one",
+      "nome": "One on One",
+      "primaria": "DR",
+      "grupos": [
+        { "posicoes": ["PG", "SG"], "secundarias": ["HA", "JS"] },
+        { "posicoes": ["SF", "PF"], "secundarias": ["HA", "JS", "IS"] }
+      ]
+    },
+    {
+      "id": "jump-shot",
+      "nome": "Jump Shot",
+      "primaria": "JS",
+      "grupos": [
+        { "posicoes": ["PG", "SG"], "secundarias": ["JR", "HA", "DR"] },
+        { "posicoes": ["SG", "SF"], "secundarias": ["JR", "HA", "DR", "IS"] },
+        { "posicoes": ["SF", "PF"], "secundarias": ["JR", "IS"] }
+      ]
+    },
+    {
+      "id": "outside-shooting",
+      "nome": "Outside Shooting",
+      "primaria": "JR",
+      "grupos": [
+        { "posicoes": ["SG"], "secundarias": ["JS", "HA", "DR"] },
+        { "posicoes": ["PG", "SG"], "secundarias": ["JS", "HA", "DR"] },
+        { "posicoes": ["SG", "SF"], "secundarias": ["JS", "HA", "DR"] }
+      ]
+    },
+    {
+      "id": "inside-shot",
+      "nome": "Inside Shot",
+      "primaria": "IS",
+      "grupos": [
+        { "posicoes": ["C"], "secundarias": ["JS", "ID"] },
+        { "posicoes": ["C", "PF"], "secundarias": ["JS", "ID"] },
+        { "posicoes": ["C", "PF", "SF"], "secundarias": ["JS", "ID"] }
+      ]
+    },
+    {
+      "id": "inside-defense",
+      "nome": "Inside Defense",
+      "primaria": "ID",
+      "grupos": [
+        { "posicoes": ["C"], "secundarias": ["DR", "IS", "SB"] },
+        { "posicoes": ["C", "PF"], "secundarias": ["DR", "IS", "SB"] },
+        { "posicoes": ["C", "PF", "SF"], "secundarias": ["DR", "IS", "SB"] }
+      ]
+    },
+    {
+      "id": "rebounding",
+      "nome": "Rebounding",
+      "primaria": "RB",
+      "grupos": [{ "posicoes": ["C", "PF"], "secundarias": ["IS", "ID"] }]
+    },
+    {
+      "id": "shot-blocking",
+      "nome": "Shot Blocking",
+      "primaria": "SB",
+      "grupos": [
+        { "posicoes": ["C"], "secundarias": ["ID", "RB"] },
+        { "posicoes": ["C", "PF"], "secundarias": ["ID", "RB"] },
+        { "posicoes": ["C", "PF", "SF"], "secundarias": ["ID", "RB"] }
+      ]
+    }
+  ]
+}

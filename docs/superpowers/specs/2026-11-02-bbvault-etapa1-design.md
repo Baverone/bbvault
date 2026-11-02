@@ -39,7 +39,7 @@ calculadoras não precisam de login.
 - **Dados privados.** O André autorizou no site público as curvas resumidas da base da
   seleção portuguesa: TSP por época e por idade, TSP máximo por potencial e perfis por
   altura. **Dados de jogadores nunca vão para o site.** Caminhos do PC e notas locais
-  ficam em `.local/`, que está no `.gitignore`.
+  ficam numa pasta local de trabalho, ignorada pelo git.
 
 ## 1. O site
 
@@ -65,7 +65,10 @@ calculadoras não precisam de login.
 
 ## 2. Escalas (comuns às três calculadoras)
 
-- **Skills:** níveis inteiros a partir de 1.
+- **Skills:** níveis inteiros de 1 a 40.
+  - Alterado a 02/11/2026: antes não havia limite superior; agora os valores acima de 40
+    são rejeitados (gralha provável). Na página de Salário, qualquer skill acima de 20
+    traz o aviso «acima de 20 o modelo está a extrapolar».
   - Os nomes vão de 1 «atrocious» a 20 «legendary», e acima de 20 o nome continua
     «legendary» com o número.
   - Os 20 nomes, por ordem: atrocious, pitiful, awful, inept, mediocre, average,
@@ -121,7 +124,10 @@ calculadoras não precisam de login.
 
 **Prever o salário:**
 - Entram a posição e as 12 skills (as 10 do TSP mais ST e FT). Sai o salário previsto para
-  a próxima época, com a margem típica do modelo para essa posição.
+  a próxima época, com o erro típico do modelo para essa posição.
+  - Alterado a 02/11/2026: o erro mostra-se como «erro típico do modelo: X% — metade dos
+    jogadores da amostra ficou mais longe do que isto», sem «±», para não parecer um
+    intervalo de confiança.
 - A página diz que **o salário só é recalculado no início da época** e que as subidas a
   meio não o mudam.
 
@@ -131,7 +137,8 @@ calculadoras não precisam de login.
 - A resposta dá:
   - o total por semana;
   - o total por época, num intervalo de 12 a 14 semanas pagas: uma equipa fora dos
-    playoffs pode não pagar as duas últimas semanas, e algumas saltam uma;
+    playoffs pode não pagar as duas últimas semanas, e algumas saltam uma (confirmado
+    pelo manual);
   - o salário mínimo da divisão e a diferença face a ele. Abaixo do mínimo, paga-se o
     mínimo na mesma.
 
@@ -139,11 +146,12 @@ calculadoras não precisam de login.
 
 - **Entradas:** idade, altura, potencial e as 12 skills.
 - **Força por posição:** uma nota de 0 a 100 para PG, SG, SF, PF e C, e a melhor posição.
-  - A nota de cada posição é o salário que o modelo da secção 4.2 prevê para o jogador
-    nessa posição.
-  - Divide-se pelo salário previsto, com o mesmo modelo, de um jogador de referência com
-    todas as skills a 20.
-  - O resultado limita-se a 100.
+  - A nota de cada posição é a média das skills pesada pelo que o jogo paga nessa
+    posição, na escala de 1 a 20: com os coeficientes `b` do modelo da secção 4.2,
+    `nota = round(100 × clamp(Σ b·(skill − 1) / Σ b·19, 0, 1))` sobre as 12 skills. Não
+    depende de `a` nem da exponencial; skills acima de 20 dão no máximo 100.
+  - Alterado a 02/11/2026: a razão de salários dava notas de 0 a 3 a quase todos os
+    jogadores reais, porque o salário cresce em exponencial.
   - A página diz que é uma **estimativa nossa**, não uma fórmula do jogo, e que «o jogo
     paga mais pelas skills que contam em cada posição».
 - **Comparação com internacionais da mesma altura:** para cada skill, diz se está abaixo
@@ -152,6 +160,11 @@ calculadoras não precisam de login.
   - Mostra o TSP atual contra o TSP máximo observado para o potencial do jogador.
   - Projeta o TSP aos 24, 26 e 28 anos, somando a mediana e o P90 por idade da curva da
     secção 4.3, sem passar o máximo do potencial.
+  - Alterado a 02/11/2026: a época da idade atual já vai a meio, por isso só conta a
+    fração que falta até à próxima mudança de idade (dias de hoje até essa sexta ÷ 98;
+    na própria sexta da mudança conta inteira). As épocas seguintes contam inteiras e as
+    somas arredondam-se às unidades no fim, depois de limitar. Exemplo em 02/11/2026: idade
+    23, TSP 100, potencial 9 → aos 24 anos 101 (mediana) e 101 (P90), com a fração 11/98.
   - Para os potenciais 0–4 não há máximo; o site diz isso e só projeta.
 
 ## 4. Modelos e números
@@ -205,14 +218,14 @@ eles.
 
    Para os níveis 1–2 a calculadora não responde, porque não há dados.
 4. **Posições** — com 1 posição o fator é 1.
-   - Com 2 posições é **0,62**, uma «estimativa» tirada do modelo antigo do André
+   - Com 2 posições é **0,62**, uma «estimativa» tirada do modelo antigo do autor
      (0,37/0,60).
    - Com 3 posições não há resposta.
 5. **Minutos.** O limiar depende da idade: 45 minutos aos 18–19, 48 aos 20–26 e 40 a
    partir dos 27. Há 1 minuto de folga.
    - Com o limiar menos 1 ou mais, o fator é 1.
    - Abaixo disso, o fator é minutos ÷ limiar, como diz o manual («treina menos»).
-   - Abaixo do limiar o site também avisa que os dados do André sugerem quase zero.
+   - Abaixo do limiar o site também avisa que os dados do autor sugerem quase zero.
 
 **Secundárias:** cada uma ganha **0,15 ×** o ganho da primária. É uma estimativa tirada do
 modelo antigo (HA +0,09 com OD +0,60).
@@ -241,7 +254,7 @@ só têm um caso isolado.
   separado por posição.
   - O ajuste é feito sobre os cerca de 800 jogadores de mercado recolhidos pelo André
     entre 17/08 e 07/09/2026.
-  - O script sai de `.local/salario_fit.py` e passa para `scripts/ajustar-salario.py`, sem
+  - O script sai da pasta local de trabalho e passa para `scripts/ajustar-salario.py`, sem
     caminhos do PC: os dados entram por argumento.
   - O script escreve `src/data/salario.json` com `a`, os `b` e a mediana do erro relativo
     de cada posição. Os dados de mercado ficam fora do repositório.
@@ -290,7 +303,7 @@ dos jogadores do André, que fica para a 2.ª etapa com `traininghistory.aspx`.
 5. **Salário.**
    - Nos jogadores de agosto das equipas do André, a mediana do erro relativo tem de ser
      ≤ 10%.
-   - Os jogadores ficam como fixture local em `.local/`.
+   - Os jogadores ficam como fixture local, fora do repositório.
    - O teste do repositório usa só jogadores sintéticos, para verificar que o modelo é
      monótono: mais skill da posição dá mais salário.
 6. **Salário mínimo:** na divisão II, com contrato de TV de 157 130, dá 293 833.

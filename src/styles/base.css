@@ -1,0 +1,522 @@
+/* A BASE do bbvault: corpo, casca, cartões, formulários, tabelas e avisos.
+ * Só usa os tokens de tokens.css. As páginas acrescentam o que é delas. */
+
+/* ---------- casca ---------- */
+.salta {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 8px 12px;
+  z-index: 100;
+}
+.salta:focus {
+  left: 8px;
+  top: 8px;
+}
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--card2);
+  border-bottom: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top);
+}
+.topo-in {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font: 700 17px var(--font-hd);
+  cursor: pointer;
+}
+.mk {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: 700 13px var(--font-hd);
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-link {
+  padding: 14px 12px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+}
+.nav-link:hover {
+  color: var(--ink);
+}
+.nav-link.ativo {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.pagina {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+.pagina:focus {
+  outline: none;
+}
+.cabecalho h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+}
+.sub {
+  margin: 4px 0 20px;
+  color: var(--muted);
+}
+.lead {
+  font-size: 17px;
+  color: var(--ink2);
+  max-width: 62ch;
+}
+
+.rodape {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+  font-size: 13px;
+}
+
+/* No telemóvel a navegação passa para uma linha própria, ainda no topo. */
+@media (max-width: 640px) {
+  .topo-in {
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 0 12px;
+  }
+  .nav {
+    flex: 1 0 100%;
+    margin: 0 -12px;
+    padding: 0 8px;
+    border-top: 1px solid var(--line);
+  }
+  .nav-link {
+    padding: 11px 12px;
+  }
+  .cabecalho h1 {
+    font-size: 24px;
+  }
+}
+
+/* ---------- cartões ---------- */
+.cartao {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: 16px;
+  margin: 0 0 16px;
+  box-shadow: var(--sombra);
+}
+.cartao h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+:where(.cartao) p {
+  margin: 0;
+  color: var(--ink2);
+}
+.cartao-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.cartao-link:hover {
+  border-color: var(--accent-line);
+}
+.cartao-link h2 {
+  color: var(--accent);
+}
+
+.grelha {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin: 20px 0;
+}
+.grelha .cartao {
+  margin: 0;
+}
+
+/* ---------- formulários ---------- */
+.linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 140px;
+}
+.campo label,
+.campo .rotulo {
+  font-size: 13px;
+  color: var(--muted);
+}
+.campo .ajuda {
+  font-size: 12px;
+  color: var(--dim);
+}
+
+input,
+select,
+textarea {
+  background: var(--card2);
+  color: var(--ink);
+  border: 1px solid var(--line2);
+  border-radius: var(--r);
+  padding: 9px 11px;
+  font-size: 15px;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+}
+/* Campo inválido: borda e fundo a vermelho, com a mensagem em .erro-msg. */
+.erro,
+input.erro,
+select.erro {
+  border-color: var(--err);
+  background: var(--err-soft);
+}
+.erro-msg {
+  font-size: 13px;
+  color: var(--err);
+}
+
+button.botao,
+.botao {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  border-radius: var(--r);
+  padding: 10px 16px;
+  font: 600 15px var(--font);
+  cursor: pointer;
+}
+button.botao:hover,
+.botao:hover {
+  background: var(--accent-hi);
+}
+button.botao.secundario {
+  background: var(--card3);
+  color: var(--ink);
+  border: 1px solid var(--line2);
+}
+
+/* ---------- tabelas ---------- */
+/* A tabela corre na horizontal DENTRO do cartão: a página nunca. */
+.tabela-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-num);
+}
+th,
+td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+th {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+td.num,
+th.num {
+  text-align: right;
+}
+
+/* ---------- avisos ---------- */
+.aviso {
+  background: var(--warn-soft);
+  color: var(--warn);
+  border: 1px solid var(--warn);
+  border-radius: var(--r);
+  padding: 10px 14px;
+  margin: 0 0 16px;
+}
+
+/* ---------- jogador e skills ---------- */
+.jogador-form fieldset.skills {
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+}
+.jogador-form fieldset.skills legend {
+  padding: 0;
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.skills-grelha {
+  display: grid;
+  gap: 10px 12px;
+  grid-template-columns: repeat(auto-fill, minmax(116px, 1fr));
+  margin: 0 0 8px;
+}
+.skill-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.skill-campo label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink2);
+}
+/* O nome do nível (proficient, legendary…) fica ao lado do número. */
+.skill-nome {
+  min-height: 1.4em;
+  font-size: 12px;
+  color: var(--dim);
+  overflow-wrap: anywhere;
+}
+.ajuda,
+.dica {
+  font-size: 13px;
+  color: var(--dim);
+}
+.dica {
+  margin: 0 0 12px;
+}
+.campo.campo-botao {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+}
+.objetivo {
+  align-items: flex-start;
+}
+button.botao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- respostas ---------- */
+.cartao h3 {
+  margin: 16px 0 8px;
+  font-size: 15px;
+}
+.cartao .resumo {
+  margin: 0 0 12px;
+  color: var(--ink2);
+}
+.sem-estimativa {
+  background: var(--info-soft);
+  border: 1px solid var(--line2);
+  border-radius: var(--r);
+  padding: 10px 14px;
+  margin: 0 0 16px;
+  color: var(--ink2);
+}
+/* Tabelas compridas (semana a semana) correm em altura DENTRO do cartão. */
+.tabela-alta {
+  max-height: 420px;
+  overflow-y: auto;
+}
+.tabela-alta th {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+}
+
+/* ---------- nota de método ---------- */
+.nota-metodo summary {
+  cursor: pointer;
+  font: 600 16px var(--font-hd);
+}
+.nota-metodo h3 {
+  margin: 16px 0 4px;
+}
+.metodo-lista {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: var(--ink2);
+}
+.metodo-lista li {
+  margin: 0 0 10px;
+}
+.certeza {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.certeza-confirmado {
+  color: var(--ok);
+}
+.certeza-provavel {
+  color: var(--info);
+}
+.certeza-estimativa {
+  color: var(--warn);
+}
+
+.objetivos {
+  margin: 0 0 16px;
+}
+
+/* ---------- salário ---------- */
+.resultado {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: var(--ink2);
+}
+.valor-grande {
+  font: 700 28px var(--font-hd);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+/* Pares «o quê / quanto»: o valor à direita, a quebrar linha se não couber. */
+.quadro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 16px;
+  margin: 0 0 12px;
+  max-width: 560px;
+}
+.quadro dt {
+  color: var(--muted);
+}
+.quadro dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  font-weight: 600;
+}
+@media (max-width: 480px) {
+  .quadro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .quadro dd {
+    text-align: left;
+    margin: 0 0 8px;
+  }
+}
+
+/* ---------- avaliação ---------- */
+.barras {
+  list-style: none;
+  max-width: 640px;
+  margin: 0 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.barra-linha {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink2);
+}
+.barra-nome {
+  font-weight: 600;
+}
+.barra {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--card3);
+  border: 1px solid var(--line2);
+  overflow: hidden;
+}
+.barra-valor {
+  display: block;
+  height: 100%;
+  background: var(--info);
+  opacity: 0.7;
+}
+.barra-linha.melhor .barra-valor {
+  background: var(--accent);
+  opacity: 1;
+}
+.barra-linha.melhor .barra-nome,
+.barra-linha.melhor .barra-nota {
+  color: var(--accent);
+  font-weight: 700;
+}
+.barra-nota {
+  min-width: 5.5em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.barra-melhor {
+  font-size: 12px;
+}
+.etiqueta {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 12px;
+  font-weight: 600;
+}
+.etiqueta-abaixo {
+  color: var(--warn);
+}
+.etiqueta-dentro {
+  color: var(--ok);
+}
+.etiqueta-acima {
+  color: var(--info);
+}
+
+/* ---------- início ---------- */
+.texto-inicio {
+  max-width: 62ch;
+  margin: 0 0 12px;
+  color: var(--ink2);
+}

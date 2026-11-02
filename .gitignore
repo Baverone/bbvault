@@ -5,3 +5,9 @@ dist/
 
 # O plano de trabalho tem caminhos do PC: fica local
 docs/superpowers/plans/
+
+# Espaco de trabalho dos agentes (briefs, relatorios)
+.superpowers/
+
+# Definicoes locais do Claude (launch.json)
+.claude/

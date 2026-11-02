@@ -1,0 +1,107 @@
+/* Os TOKENS do bbvault: cores, tipos de letra e medidas, num sítio só.
+ *
+ * Duas notas que valem a pena não se perderem:
+ *
+ *   * o `--dim` é o cinzento do texto pequeno que EXPLICA as coisas. Fica em
+ *     #8c93a8, que sobre o `--card` dá 5,5:1, acima do mínimo do WCAG AA. Não o
+ *     escureças "para ficar discreto";
+ *   * quem escreve texto POR CIMA do verde usa `--accent-ink` (quase preto):
+ *     branco sobre #38d39f é 1,9:1 e não se lê.
+ */
+
+:root {
+  --bg: #07080d;
+  --card: #12151f;
+  --card2: #0e1018;
+  --card3: #171b28;
+
+  --ink: #eef0f6;
+  --ink2: #c8cede;
+  --muted: #8c93a8;
+  --dim: #8c93a8;
+
+  --line: rgba(255, 255, 255, 0.07);
+  --line2: rgba(255, 255, 255, 0.13);
+
+  /* A cor do projeto. */
+  --accent: #38d39f;
+  --accent-ink: #04130e;
+  --accent-soft: #0d2a22;
+  --accent-line: #1f5f4c;
+  --accent-hi: #6ee7bd;
+
+  /* As cores com significado. Nenhuma delas é o verde da marca: o verde quer
+     dizer "isto é o bbvault", e usá-lo também para "está bom" punha dois
+     significados na mesma cor. */
+  --info: #6f9bff;
+  --info-soft: #131c31;
+  --ok: #4fd08a;
+  --warn: #f0a35a;
+  --warn-soft: #2a1d10;
+  --err: #ff7b7b;
+  --err-soft: #2c1417;
+
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-hd: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-num: 'Inter', system-ui, sans-serif;
+
+  --maxw: 1200px;
+  --r: 12px;
+  --r2: 16px;
+  --sombra: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.6 var(--font);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-hd);
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 2px;
+}
+
+img,
+svg,
+video,
+canvas,
+table,
+pre {
+  max-width: 100%;
+}
+
+/* Os `input type="number"` têm largura intrínseca (~200px): sem isto, dentro de
+   um campo estreito o documento ganhava scroll horizontal no telemóvel. */
+input,
+select,
+textarea {
+  min-width: 0;
+  max-width: 100%;
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
